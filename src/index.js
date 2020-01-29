@@ -9,13 +9,11 @@ import { authContext } from './adalConfig';
 
 const DO_NOT_LOGIN = false;
 
-runWithAdal(
-    authContext,
-    () => { require('./App'); },
-    DO_NOT_LOGIN
-);
+runWithAdal(authContext, () => {
+  ReactDOM.render(<App />, document.getElementById('root'));
+  registerServiceWorker();
+},DO_NOT_LOGIN);
 
-ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
