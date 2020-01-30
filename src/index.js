@@ -11,7 +11,6 @@ const DO_NOT_LOGIN = false;
 
 runWithAdal(authContext, () => {
   ReactDOM.render(<App />, document.getElementById('root'));
-  registerServiceWorker();
 },DO_NOT_LOGIN);
 
 
