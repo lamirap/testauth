@@ -18,20 +18,48 @@ class App extends Component {
     // from Microsoft Graph as the REST API request to make.
     adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {})
       .then((response) => {
-
-        // This is where you deal with your API response. In this case, we            
-        // interpret the response as JSON, and then call `setState` with the
-        // pretty-printed JSON-stringified object.
         response.json()
           .then((responseJson) => {
-            this.setState({ apiResponse: JSON.stringify(responseJson, null, 2) })
+            this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
           });
       })
       .catch((error) => {
-
-        // Don't forget to handle errors!
         console.error(error);
       })
+
+    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/groups/', {})
+    .then((response) => {
+      response.json()
+        .then((responseJson) => {
+          this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+
+    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/sites/root', {})
+    .then((response) => {
+      response.json()
+        .then((responseJson) => {
+          this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+
+    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/sites/tintl.sharepoint.com,0a18156c-e229-417d-bac0-1601ab933bdd,2972b475-7b48-4340-829b-65734b80d885/lists/770870c4-d8df-452c-9a59-3af04b4d99b3/items/64', {})
+    .then((response) => {
+      response.json()
+        .then((responseJson) => {
+          this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+
   }
 
   render() {

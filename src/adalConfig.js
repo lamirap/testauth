@@ -12,7 +12,7 @@ const adalConfig = {
         api: 'https://graph.microsoft.com'
     },
     cacheLocation: 'sessionStorage',
-    consentScopes: ["user.read"]
+    consentScopes: ["User.Read", "User.Read.all", "Group.Read.all", "Sites.Read.all", "Sites.ReadWrite.all"]
 };
 
 export const authContext = new AuthenticationContext(adalConfig);
