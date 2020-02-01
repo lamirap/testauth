@@ -4,11 +4,12 @@ const adalConfig = {
     tenant: 'parimaldotcitylabs.onmicrosoft.com',
     clientId: 'a6228fdf-b4da-410c-a6b8-40f9626526a9',
     redirectUri: 'https://condescending-carson-2366ef.netlify.com/',
-    // redirectUri: 'https://localhost:3000/',
+    // redirectUri: 'http://localhost:3000/',
     endpoints: {
-        api: 'https://parimaldotcitylabs.onmicrosoft.com/a6228fdf-b4da-410c-a6b8-40f9626526a9'
+        api: 'https://graph.microsoft.com'
     },
-    cacheLocation: 'sessionStorage'
+    cacheLocation: 'sessionStorage',
+    consentScopes: ["user.read"]
 };
 
 export const authContext = new AuthenticationContext(adalConfig);

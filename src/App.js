@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { adalApiFetch } from './adalConfig';
+import { adalApiFetch, authContext, getToken } from './adalConfig';
 import './App.css';
 
 
@@ -11,6 +11,9 @@ class App extends Component {
 
   componentDidMount() {
 
+    console.log(authContext.getCachedUser());
+    console.log(authContext);
+    console.log(getToken());
     // We're using Fetch as the method to be called, and the /me endpoint 
     // from Microsoft Graph as the REST API request to make.
     adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {})
