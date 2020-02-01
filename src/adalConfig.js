@@ -1,8 +1,11 @@
 import { AuthenticationContext, adalFetch, withAdalLogin } from 'react-adal';
 
 const adalConfig = {
-    tenant: 'parimaldotcitylabs.onmicrosoft.com',
-    clientId: 'a6228fdf-b4da-410c-a6b8-40f9626526a9',
+    // tenant: 'parimaldotcitylabs.onmicrosoft.com',
+    // clientId: 'a6228fdf-b4da-410c-a6b8-40f9626526a9',
+    tenant: 'temasek.com.sg',
+    clientId: "245e9392-c666-4d51-8f8a-bfd9e55b2456",
+    authority: "https://login.microsoftonline.com/common",
     redirectUri: 'https://condescending-carson-2366ef.netlify.com/',
     // redirectUri: 'http://localhost:3000/',
     endpoints: {
