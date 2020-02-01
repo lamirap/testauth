@@ -1,75 +1,76 @@
-import React, { Component } from 'react';
-import { adalApiFetch, authContext, getToken } from './adalConfig';
-import './App.css';
+import React from "react";
+import PropTypes from "prop-types";
+import AuthProvider from "./AuthProvider";
 
+import "./App.css";
 
-class App extends Component {
+const Json = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>;
 
-  state = {
-    apiResponse: ''
-  };
+class App extends React.Component {
+    static propTypes = {
+        account: PropTypes.object,
+        emailMessages: PropTypes.object,
+        error: PropTypes.string,
+        graphProfile: PropTypes.object,
+        siteProfile: PropTypes.object,
+        onSignIn: PropTypes.func.isRequired,
+        onSignOut: PropTypes.func.isRequired,
+        onRequestEmailToken: PropTypes.func.isRequired
+    };
 
-  componentDidMount() {
-
-    console.log(authContext.getCachedUser());
-    console.log(authContext);
-    console.log(getToken());
-    // We're using Fetch as the method to be called, and the /me endpoint 
-    // from Microsoft Graph as the REST API request to make.
-    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/me', {})
-      .then((response) => {
-        response.json()
-          .then((responseJson) => {
-            this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-
-    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/groups/', {})
-    .then((response) => {
-      response.json()
-        .then((responseJson) => {
-          this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
-        });
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-
-    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/sites/root', {})
-    .then((response) => {
-      response.json()
-        .then((responseJson) => {
-          this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
-        });
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-
-    adalApiFetch(fetch, 'https://graph.microsoft.com/v1.0/sites/tintl.sharepoint.com,0a18156c-e229-417d-bac0-1601ab933bdd,2972b475-7b48-4340-829b-65734b80d885/lists/770870c4-d8df-452c-9a59-3af04b4d99b3/items/64', {})
-    .then((response) => {
-      response.json()
-        .then((responseJson) => {
-          this.setState({ apiResponse: this.state.apiResponse + '\n' + JSON.stringify(responseJson, null, 2) })
-        });
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-
-  }
-
-  render() {
-    return (
-      <div>
-        <p>API response:</p>
-        <pre>{ this.state.apiResponse }</pre>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <section>
+                    <h1>
+                        Welcome to the Microsoft Authentication Library For
+                        Javascript - React Quickstart
+                    </h1>
+                    {!this.props.account ? (
+                        <button onClick={this.props.onSignIn}>Sign In</button>
+                    ) : (
+                        <>
+                            <button onClick={this.props.onSignOut}>
+                                Sign Out
+                            </button>
+                            <button onClick={this.props.onRequestEmailToken}>
+                                Request Email Permission
+                            </button>
+                        </>
+                    )}
+                    {this.props.error && (
+                        <p className="error">Error: {this.props.error}</p>
+                    )}
+                </section>
+                <section className="data">
+                    {this.props.account && (
+                        <div className="data-account">
+                            <h2>Session Account Data</h2>
+                            <Json data={this.props.account} />
+                        </div>
+                    )}
+                    {this.props.graphProfile && (
+                        <div className="data-graph">
+                            <h2>Graph Profile Data</h2>
+                            <Json data={this.props.graphProfile} />
+                        </div>
+                    )}
+                    {this.props.siteProfile && (
+                        <div className="data-graph">
+                            <h2>Graph Site Data</h2>
+                            <Json data={this.props.siteProfile} />
+                        </div>
+                    )}
+                    {this.props.emailMessages && (
+                        <div className="data-graph">
+                            <h2>Messages Data</h2>
+                            <Json data={this.props.emailMessages} />
+                        </div>
+                    )}
+                </section>
+            </div>
+        );
+    }
 }
 
-export default App;
+export default AuthProvider(App);
