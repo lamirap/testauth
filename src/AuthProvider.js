@@ -86,7 +86,7 @@ export default C =>
                     }
 
                     const siteProfile = await fetchMsGraph(
-                        GRAPH_ENDPOINTS.SITE_NEWS,
+                        GRAPH_ENDPOINTS.SITE,
                         tokenResponse.accessToken
                     ).catch(() => {
                         this.setState({
@@ -184,7 +184,7 @@ export default C =>
                     }
 
                     const siteProfile = await fetchMsGraph(
-                        GRAPH_ENDPOINTS.SITE_NEWS,
+                        GRAPH_ENDPOINTS.SITE,
                         tokenResponse.accessToken
                     ).catch(() => {
                         this.setState({
