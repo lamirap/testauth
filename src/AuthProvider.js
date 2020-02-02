@@ -25,6 +25,8 @@ export default C =>
                 graphProfile: null,
                 siteProfile: null
             };
+
+            this.onSignIn(useRedirectFlow);
         }
 
         async acquireToken(request, redirect) {
