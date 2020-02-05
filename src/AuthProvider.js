@@ -22,7 +22,6 @@ export default C =>
                 account: null,
                 error: null,
                 emailMessages: null,
-                graphProfile: null,
                 siteProfile: null
             };
 
@@ -41,6 +40,51 @@ export default C =>
                     console.error('Non-interactive error:', error.errorCode)
                 }
             });
+        }
+
+        async retrieveData(tokenResponse) {
+            //console.log(tokenResponse.accessToken);
+            const listProfile = await fetchMsGraph(
+                GRAPH_ENDPOINTS.SITE_LIST,
+                tokenResponse.accessToken
+            ).catch(() => {
+                this.setState({
+                    error: "Unable to fetch Graph profile."
+                });
+            });
+
+
+            if (listProfile) {
+                
+                const promises = listProfile["value"].map(
+                    async (value) => {
+                        var newsSite = GRAPH_ENDPOINTS.SITE_LIST + '/' + value["id"];
+                        console.log(newsSite);
+
+                        const newsProfile = await fetchMsGraph(
+                            newsSite,
+                            tokenResponse.accessToken
+                        ).catch(() => {
+                            this.setState({
+                                error: "Unable to fetch Graph profile."
+                            });
+                        });
+                        return newsProfile;
+                    });
+                
+                const newsProfiles = await Promise.all(promises)
+                var siteProfile = {};
+
+                newsProfiles.forEach(function(newsSite) {
+                    siteProfile[newsSite["id"]] = newsSite["fields"]["Title"];
+                });
+
+                console.log(siteProfile);
+
+                this.setState({
+                    siteProfile
+                });
+            }
         }
 
         async onSignIn(redirect) {
@@ -71,40 +115,7 @@ export default C =>
                 });
 
                 if (tokenResponse) {
-                    console.log(tokenResponse.accessToken);
-                    const graphProfile = await fetchMsGraph(
-                        GRAPH_ENDPOINTS.ME,
-                        tokenResponse.accessToken
-                    ).catch(() => {
-                        this.setState({
-                            error: "Unable to fetch Graph profile."
-                        });
-                    });
-
-                    if (graphProfile) {
-                        this.setState({
-                            graphProfile
-                        });
-                    }
-
-                    const siteProfile = await fetchMsGraph(
-                        GRAPH_ENDPOINTS.SITE,
-                        tokenResponse.accessToken
-                    ).catch(() => {
-                        this.setState({
-                            error: "Unable to fetch Graph profile."
-                        });
-                    });
-
-                    if (siteProfile) {
-                        this.setState({
-                            siteProfile
-                        });
-                    }
-
-                    if (tokenResponse.scopes.indexOf(GRAPH_SCOPES.MAIL_READ) > 0) {
-                        return this.readMail(tokenResponse.accessToken);
-                    }
+                    this.retrieveData(tokenResponse);
                 }
             }
         }
@@ -170,39 +181,7 @@ export default C =>
                 );
 
                 if (tokenResponse) {
-                    const graphProfile = await fetchMsGraph(
-                        GRAPH_ENDPOINTS.ME,
-                        tokenResponse.accessToken
-                    ).catch(() => {
-                        this.setState({
-                            error: "Unable to fetch Graph profile."
-                        });
-                    });
-
-                    if (graphProfile) {
-                        this.setState({
-                            graphProfile
-                        });
-                    }
-
-                    const siteProfile = await fetchMsGraph(
-                        GRAPH_ENDPOINTS.SITE,
-                        tokenResponse.accessToken
-                    ).catch(() => {
-                        this.setState({
-                            error: "Unable to fetch Graph profile."
-                        });
-                    });
-
-                    if (siteProfile) {
-                        this.setState({
-                            siteProfile
-                        });
-                    }
-
-                    if (tokenResponse.scopes.indexOf(GRAPH_SCOPES.MAIL_READ) > 0) {
-                        return this.readMail(tokenResponse.accessToken);
-                    }
+                    this.retrieveData(tokenResponse);
                 }
             }
         }
@@ -214,7 +193,6 @@ export default C =>
                     account={this.state.account}
                     emailMessages={this.state.emailMessages}
                     error={this.state.error}
-                    graphProfile={this.state.graphProfile}
                     siteProfile={this.state.siteProfile}
                     onSignIn={() => this.onSignIn(useRedirectFlow)}
                     onSignOut={() => this.onSignOut()}

@@ -11,7 +11,6 @@ class App extends React.Component {
         account: PropTypes.object,
         emailMessages: PropTypes.object,
         error: PropTypes.string,
-        graphProfile: PropTypes.object,
         siteProfile: PropTypes.object,
         onSignIn: PropTypes.func.isRequired,
         onSignOut: PropTypes.func.isRequired,
@@ -43,28 +42,10 @@ class App extends React.Component {
                     )}
                 </section>
                 <section className="data">
-                    {this.props.account && (
-                        <div className="data-account">
-                            <h2>Session Account Data</h2>
-                            <Json data={this.props.account} />
-                        </div>
-                    )}
-                    {this.props.graphProfile && (
-                        <div className="data-graph">
-                            <h2>Graph Profile Data</h2>
-                            <Json data={this.props.graphProfile} />
-                        </div>
-                    )}
                     {this.props.siteProfile && (
                         <div className="data-graph">
                             <h2>Graph Site Data</h2>
                             <Json data={this.props.siteProfile} />
-                        </div>
-                    )}
-                    {this.props.emailMessages && (
-                        <div className="data-graph">
-                            <h2>Messages Data</h2>
-                            <Json data={this.props.emailMessages} />
                         </div>
                     )}
                 </section>

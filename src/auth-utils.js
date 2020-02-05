@@ -45,6 +45,7 @@ export const GRAPH_SCOPES = {
 export const GRAPH_ENDPOINTS = {
     ME: "https://graph.microsoft.com/v1.0/me",
     SITE: "https://graph.microsoft.com/v1.0/sites/root",
+    SITE_LIST: "https://graph.microsoft.com/v1.0/sites/tintl.sharepoint.com,0a18156c-e229-417d-bac0-1601ab933bdd,2972b475-7b48-4340-829b-65734b80d885/lists/770870c4-d8df-452c-9a59-3af04b4d99b3/items",
     SITE_NEWS: "https://graph.microsoft.com/v1.0/sites/tintl.sharepoint.com,0a18156c-e229-417d-bac0-1601ab933bdd,2972b475-7b48-4340-829b-65734b80d885/lists/770870c4-d8df-452c-9a59-3af04b4d99b3/items/64",
     MAIL: "https://graph.microsoft.com/v1.0/me/messages"
 };
