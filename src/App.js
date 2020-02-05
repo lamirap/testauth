@@ -9,12 +9,10 @@ const Json = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>;
 class App extends React.Component {
     static propTypes = {
         account: PropTypes.object,
-        emailMessages: PropTypes.object,
         error: PropTypes.string,
         siteProfile: PropTypes.object,
         onSignIn: PropTypes.func.isRequired,
         onSignOut: PropTypes.func.isRequired,
-        onRequestEmailToken: PropTypes.func.isRequired
     };
 
     render() {
@@ -31,9 +29,6 @@ class App extends React.Component {
                         <>
                             <button onClick={this.props.onSignOut}>
                                 Sign Out
-                            </button>
-                            <button onClick={this.props.onRequestEmailToken}>
-                                Request Email Permission
                             </button>
                         </>
                     )}

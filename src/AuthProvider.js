@@ -124,39 +124,6 @@ export default C =>
             msalApp.logout();
         }
 
-        async onRequestEmailToken() {
-            const tokenResponse = await this.acquireToken(
-                GRAPH_REQUESTS.EMAIL,
-                useRedirectFlow
-            ).catch(e => {
-                this.setState({
-                    error: "Unable to acquire access token for reading email."
-                });
-            });
-
-            if (tokenResponse) {
-                return this.readMail(tokenResponse.accessToken);
-            }
-        }
-
-        async readMail(accessToken) {
-            const emailMessages = await fetchMsGraph(
-                GRAPH_ENDPOINTS.MAIL,
-                accessToken
-            ).catch(() => {
-                this.setState({
-                    error: "Unable to fetch email messages."
-                });
-            });
-
-            if (emailMessages) {
-                this.setState({
-                    emailMessages,
-                    error: null
-                });
-            }
-        }
-
         async componentDidMount() {
             msalApp.handleRedirectCallback(error => {
                 if (error) {
@@ -191,12 +158,10 @@ export default C =>
                 <C
                     {...this.props}
                     account={this.state.account}
-                    emailMessages={this.state.emailMessages}
                     error={this.state.error}
                     siteProfile={this.state.siteProfile}
                     onSignIn={() => this.onSignIn(useRedirectFlow)}
                     onSignOut={() => this.onSignOut()}
-                    onRequestEmailToken={() => this.onRequestEmailToken()}
                 />
             );
         }
