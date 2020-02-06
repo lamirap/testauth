@@ -37,9 +37,7 @@ export const GRAPH_SCOPES = {
     OPENID: "openid",
     PROFILE: "profile",
     USER_READ: "User.Read",
-    MAIL_READ: "Mail.Read",
-    SITES_READ_ALL: "Sites.Read.All",
-    SITES_READWRITE_ALL: "Sites.ReadWrite.All"
+    SITES_READ_ALL: "Sites.Read.All"
 };
 
 export const GRAPH_ENDPOINTS = {

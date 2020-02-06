@@ -20,8 +20,7 @@ class App extends React.Component {
             <div>
                 <section>
                     <h1>
-                        Welcome to the Microsoft Authentication Library For
-                        Javascript - React Quickstart
+                        Test App to access news from sharepoint
                     </h1>
                     {!this.props.account ? (
                         <button onClick={this.props.onSignIn}>Sign In</button>

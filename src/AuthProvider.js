@@ -5,7 +5,6 @@ import {
     fetchMsGraph,
     isIE,
     GRAPH_ENDPOINTS,
-    GRAPH_SCOPES,
     GRAPH_REQUESTS
 } from "./auth-utils";
 
@@ -76,7 +75,12 @@ export default C =>
                 var siteProfile = {};
 
                 newsProfiles.forEach(function(newsSite) {
-                    siteProfile[newsSite["id"]] = newsSite["fields"]["Title"];
+                    siteProfile[newsSite["id"]] = { 
+                        title: newsSite["fields"]["Title"], 
+                        createdBy: newsSite["createdBy"],
+                        description: newsSite["fields"]["Description"],
+                        linkfilename: newsSite["fields"]["LinkFilename"]
+                    };
                 });
 
                 console.log(siteProfile);
