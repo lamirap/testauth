@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import AuthProvider from "./AuthProvider";
 
-import "./App.css";
-
 const Json = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>;
 
 class App extends React.Component {
